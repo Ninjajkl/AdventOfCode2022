@@ -4,7 +4,7 @@ import re
 
 def Part1(inputName):
     interpretInput(inputName)
-    return value.tunnelPages["AA"].findPressure()
+    return value.findPressure(value.tunnelPages["AA"])
 
 def Part2(inputName):
     interpretInput(inputName)
@@ -75,25 +75,25 @@ class value:
             return pressure
         otherPressure = max([other.findPressure(timeLimit,enabledValves,time+1+self.distanceDict[other]) for other in self.distanceDict if other not in eValves])
         #otherPressure = 0
-        #for other in self.distanceDict:
+        #for other in v.distanceDict:
         #    if other not in eValves:
-        #        otherPressure = max(otherPressure,other.findPressure(timeLimit,enabledValves,time+1+self.distanceDict[other]))
+        #        otherPressure = max(otherPressure,other.findPressure(timeLimit,enabledValves,time+1+v.distanceDict[other]))
         return pressure + otherPressure
 
-    def findElephantPressure(self, elephant = None, timeLimit = 26, eValves = [], time = 0, eTime = 0):
-        if time >= timeLimit or eTime >= timeLimit: return 0
-        enabledValves = eValves + [self] if self.name == "AA" else eValves + [self] + [elephant]
-        pressure = self.flowRate * (timeLimit-time)
+    def findElephantPressure(v, elephant = None, timeLimit = 26, eValves = [], time = 0, eTime = 0):
+        if time >= timeLimit: return elephant.findPressure(timeLimit,eValves,eTime)
+        elif eTime >= timeLimit: return v.findPressure(timeLimit,eValves,time)
+        enabledValves = eValves + [v] if v.name == "AA" else eValves + [v] + [elephant]
+        pressure = v.flowRate * (timeLimit-time)
         ePressure = elephant.flowRate * (timeLimit-eTime)
-        if len(enabledValves) == len(self.distanceDict)+2:
+        if len(enabledValves) >= len(v.distanceDict)+1:
             return pressure + ePressure
-        #otherPressure = max([other.findPressure(timeLimit,enabledValves,time+1+self.distanceDict[other]) for other in self.distanceDict if other not in eValves])
         otherPressure = 0
-        for other in self.distanceDict:
+        for other in v.distanceDict:
             if other not in enabledValves:
                 for eOther in elephant.distanceDict:
                     if eOther not in enabledValves and eOther is not other:
-                        otherPressure = max(otherPressure,other.findElephantPressure(eOther,timeLimit,enabledValves,time+1+self.distanceDict[other],eTime+1+elephant.distanceDict[eOther]))
+                        otherPressure = max(otherPressure,other.findElephantPressure(eOther,timeLimit,enabledValves,time+1+v.distanceDict[other],eTime+1+elephant.distanceDict[eOther]))
         return pressure + ePressure + otherPressure
 
     def __str__(self) -> str:
