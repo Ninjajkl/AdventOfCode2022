@@ -34,7 +34,7 @@ def Part1(inputName):
         successors = currStep.getSuccessors(visitedSet)
         for s in successors:
             i+=1
-            heapq.heappush(frontier,(s.getEDis(), i, s))
+            heapq.heappush(frontier,(s.getEDis()+s.getHeight()*2, i, s))
     print(i)
     return currStep.getSDis()
 
@@ -59,17 +59,13 @@ def Part2(inputName):
         if len(frontier) == 0:
             return "broke"
         currStep = frontier.pop(0)[2]
-        if len(frontier) % 50000 == 0:
-            print(Input[currStep.getX()][currStep.getY()])
-            print("i: " + str(i))
         if Input[currStep.getX()][currStep.getY()] == 97:
             break
         visitedSet.add(str(currStep.getX()) + " " + str(currStep.getY()))
-        successors = currStep.getReverseSuccessors(visitedSet)
+        successors = currStep.getSuccessors(visitedSet,True)
         for s in successors:
             i+=1
             heapq.heappush(frontier,(s.getADis()+s.getHeight()*4, i, s))
-    print(i)
     return currStep.getSDis()
 
 class step:
@@ -106,27 +102,14 @@ class step:
     def getHeight(self):
         return self.height
 
-    def getSuccessors(self, visitedSet : set):
+    def getSuccessors(self, visitedSet : set, reverse = False):
         surrounding = [(1,0),(-1,0),(0,1),(0,-1)]
         successors = []
         for pos in surrounding:
             nX = self.x+pos[0]
             nY = self.y+pos[1]
-            if nX > -1 and nX < self.boardHeight and nY > -1 and nY < self.boardlength and self.height - self.Input[nX][nY] > -2:
+            if nX > -1 and nX < self.boardHeight and nY > -1 and nY < self.boardlength and ((self.height - self.Input[nX][nY] > -2 and reverse == False) or (self.height - self.Input[nX][nY] < 2 and reverse == True)):
                 if not (str(nX) + " " + str(nY)) in visitedSet:
                     newStep = step(nX, nY, self.Input[nX][nY], self.sDis+1)
                     successors.append(newStep)
         return successors
-
-    def getReverseSuccessors(self, visitedSet : set):
-        surrounding = [(1,0),(0,-1),(-1,0),(0,1)]
-        successors = []
-        for pos in surrounding:
-            nX = self.x+pos[0]
-            nY = self.y+pos[1]
-            if nX > -1 and nX < self.boardHeight and nY > -1 and nY < self.boardlength and self.height - self.Input[nX][nY] < 2:
-                if not (str(nX) + " " + str(nY)) in visitedSet:
-                    newStep = step(nX, nY, self.Input[nX][nY], self.sDis+1)
-                    successors.append(newStep)
-        return successors
-
