@@ -1,5 +1,6 @@
 import importlib
 import importlib.util
+from time import time_ns
 
 while(True):
     #Day Selection
@@ -23,7 +24,8 @@ while(True):
         inputType = "Day" + dayNumber
 
     #print output
-    print(getattr(day, "Part" + str(dayPart))(inputType))
+    start = time_ns()
+    print("In: " + str(getattr(day, "Part" + str(dayPart))(inputType)) + " in " + str((time_ns()-start)/1e6) + "ms")
 
     exitAnswer = str(input("Enter 'Y' to continue, otherwise enter anything else to exit\n"))
     if(exitAnswer != "Y"):
