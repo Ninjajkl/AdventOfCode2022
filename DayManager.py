@@ -25,7 +25,7 @@ while(True):
 
     #print output
     start = time_ns()
-    print("In: " + str(getattr(day, "Part" + str(dayPart))(inputType)) + " in " + str((time_ns()-start)/1e6) + "ms")
+    print(str(getattr(day, "Part" + str(dayPart))(inputType)) + " in " + str((time_ns()-start)/1e6) + "ms")
 
     exitAnswer = str(input("Enter 'Y' to continue, otherwise enter anything else to exit\n"))
     if(exitAnswer != "Y"):
