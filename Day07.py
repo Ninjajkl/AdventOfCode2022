@@ -37,13 +37,13 @@ def Part1(inputName):
     with open("Inputs\\" + inputName + "Input.txt") as f:
         RawInput = [line.rstrip("\n") for line in f]
     root = interpretInput(RawInput)
-    print(root.findTotalSize(100000))
+    return root.findTotalSize(100000)
 
 def Part2(inputName):
     with open("Inputs\\" + inputName + "Input.txt") as f:
         RawInput = [line.rstrip("\n") for line in f]
     root = interpretInput(RawInput)
-    print(root.findMinDir(30000000-(70000000 - root.size), root.size))
+    return root.findMinDir(30000000-(70000000 - root.size), root.size)
 
 class FileSystem:
     previousFile = types.SimpleNamespace()

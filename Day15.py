@@ -39,6 +39,5 @@ def findEmptyInGrid(maxValue : int, input : list[list[int]]):
         manhat = abs(line[0]-line[2]) + abs(line[1]-line[3])
         areaTaken = areaTaken.union(Polygon(((line[0],line[1]-manhat),(line[0]+manhat,line[1]),(line[0],line[1]+manhat),(line[0]-manhat,line[1]))))
     areaTaken = areaTaken.intersection(Polygon(((0,0),(maxValue,0),(maxValue,maxValue),(0,maxValue))))
-    print(areaTaken.wkt)
-    print("The empty spot is the point surrounded by the second list of tuples")
-    print(3141837*4000000+3400528)
+    boundary = list(map(int, re.findall('\d+',areaTaken.wkt)))[10:18]
+    return (boundary[0]+boundary[2]+boundary[4]+boundary[6])*1000000+(boundary[1]+boundary[3]+boundary[5]+boundary[7])//4

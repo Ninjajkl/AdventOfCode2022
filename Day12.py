@@ -35,7 +35,7 @@ def Part1(inputName):
         for s in successors:
             i+=1
             heapq.heappush(frontier,(s.getEDis()+s.getHeight()*2, i, s))
-    print(i)
+    #print(i)
     return currStep.getSDis()
 
 def Part2(inputName):

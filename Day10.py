@@ -38,4 +38,4 @@ def Part2(inputName):
                     CRT += "\n"
                 if i == 1:
                     register += int(instr[1])
-    return CRT
+    return "\n"+CRT

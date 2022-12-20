@@ -6,6 +6,9 @@ instructions = []
 def InterpretInput(inputName):
     with open("Inputs\\" + inputName + "Input.txt") as f:
         RawInput = [line.rstrip("\n") for line in f]
+    cargoStack.clear()
+    cargoStack.append([])
+    instructions.clear()
     onInstructions = False
     currInstruction = 0
     for line in RawInput:
