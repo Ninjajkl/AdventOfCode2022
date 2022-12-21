@@ -42,4 +42,4 @@ def printAllDays(highestDay : int):
         print("Part 1: " + str(getattr(day, "Part1")("Day" + dayNumber)) + " in " + str((time_ns()-start)/1e6) + "ms")
         start = time_ns()
         print("Part 2: " + str(getattr(day, "Part2")("Day" + dayNumber)) + " in " + str((time_ns()-start)/1e6) + "ms")
-#printAllDays(20)
+#printAllDays(21)
