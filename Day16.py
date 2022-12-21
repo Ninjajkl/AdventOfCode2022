@@ -1,6 +1,6 @@
 import heapq
 import re
-    
+
 def interpretInput(inputName):
     value.tunnelPages = {}
     with open("Inputs\\" + inputName + "Input.txt") as f:
@@ -64,11 +64,11 @@ class value:
         pressure = self.flowRate * (timeLimit-time)
         if len(enabledValves) == len(self.distanceDict)+2:
             return pressure
-        otherPressure = max([other.findPressure(timeLimit,enabledValves,time+1+self.distanceDict[other]) for other in self.distanceDict if other not in eValves])
-        #otherPressure = 0
-        #for other in v.distanceDict:
-        #    if other not in eValves:
-        #        otherPressure = max(otherPressure,other.findPressure(timeLimit,enabledValves,time+1+v.distanceDict[other]))
+        #otherPressure = max([other.findPressure(timeLimit,enabledValves,time+1+self.distanceDict[other]) for other in self.distanceDict if other not in enabledValves])
+        otherPressure = 0
+        for other in self.distanceDict:
+            if other not in enabledValves:
+                otherPressure = max(otherPressure,other.findPressure(timeLimit,enabledValves,time+1+self.distanceDict[other]))
         return pressure + otherPressure
 
     #First attempt at part2. This takes about 45 mins, but does work.
@@ -92,17 +92,17 @@ class value:
     #I realized I already searched every possible path with findPressure
     #I just need to add all of the "good" paths into a list
     #Then, I search though the list and find the two highest values that had no shared paths
-    def findPressure(self, timeLimit = 30, eValves = [], time = 0):
+    def findPressure2(self,pathList, timeLimit = 26, eValves = [], time = 0):
         if time >= timeLimit: return 0
         enabledValves = eValves + [self]
         pressure = self.flowRate * (timeLimit-time)
         if len(enabledValves) == len(self.distanceDict)+2:
             return pressure
-        otherPressure = max([other.findPressure(timeLimit,enabledValves,time+1+self.distanceDict[other]) for other in self.distanceDict if other not in eValves])
-        #otherPressure = 0
-        #for other in v.distanceDict:
-        #    if other not in eValves:
-        #        otherPressure = max(otherPressure,other.findPressure(timeLimit,enabledValves,time+1+v.distanceDict[other]))
+        #otherPressure = max([other.findPressure(timeLimit,enabledValves,time+1+self.distanceDict[other]) for other in self.distanceDict if other not in enabledValves])
+        otherPressure = 0
+        for other in self.distanceDict:
+            if other not in enabledValves:
+                otherPressure = max(otherPressure,pathList,other.findPressure2(timeLimit,enabledValves,time+1+self.distanceDict[other]))
         return pressure + otherPressure
 
     def __str__(self) -> str:
@@ -113,7 +113,9 @@ def Part1(inputName):
     return value.findPressure(value.tunnelPages["AA"])
 
 def Part2(inputName):
+    return
     interpretInput(inputName)
+    return value.findPressure2(value.tunnelPages["AA"],[])
     #call original solution
     #return value.tunnelPages["AA"].findElephantPressure(value.tunnelPages["AA"],26)
 #print(Part1("Test"))

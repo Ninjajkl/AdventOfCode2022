@@ -11,7 +11,7 @@ while(True):
         dayNumber = str(input("Enter day to test in the format XX\n"))
         testLoader = importlib.util.find_spec("Day" + dayNumber)
     day = importlib.import_module("Day" + dayNumber)
-    0
+
     #Part Selection
     dayPart = int(input("Which part? Answer with a single number in the format X\n"))
     while not hasattr(day,'Part' + str(dayPart)):
@@ -42,4 +42,4 @@ def printAllDays(highestDay : int):
         print("Part 1: " + str(getattr(day, "Part1")("Day" + dayNumber)) + " in " + str((time_ns()-start)/1e6) + "ms")
         start = time_ns()
         print("Part 2: " + str(getattr(day, "Part2")("Day" + dayNumber)) + " in " + str((time_ns()-start)/1e6) + "ms")
-#printAllDays(19)
+#printAllDays(20)
