@@ -65,6 +65,9 @@ def Part2(inputName):
         if(len(boardDict[max(boardDict.keys())])==7):
             if len(fullTops) == 0:
                 fullTops.add((currJetSeq[0],currRockType))
+                #print("jetPos, rockPos:",(currJetSeq[0],currRockType))
+                #print("height:",max(boardDict.keys()))
+                #print("rocks dropped:",i)
                 continue
             if fullTops.__contains__((currJetSeq[0],currRockType)):
                 #print("jetPos, rockPos:",(currJetSeq[0],currRockType))
